@@ -1,3 +1,4 @@
+import Delete from "@/components/Delete";
 import EditModal from "@/components/EditModal";
 import { Button, Card } from "@heroui/react";
 import Image from "next/image";
@@ -18,13 +19,13 @@ const DestinationDetailsPage = async ({ params }) => {
     <div className="container mx-auto mb-10">
       <div className="flex justify-between p-3 shadow-2xl border border-gray-300 rounded-2xl mb-2">
         <Link
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 underline text-sky-400"
           href={'/destinations'}> <FaArrowLeftLong /> Back to Destinatin
         </Link>
 
         <div className="gap-2 flex">
           <EditModal data={data}/>
-          <Button className={'rounded-xs text-red-500'} variant="outline"> <BiTrash/> Delete</Button>
+          <Delete data={data}/>
         </div>
       </div>
       <Card>
