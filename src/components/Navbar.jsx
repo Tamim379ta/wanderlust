@@ -8,7 +8,7 @@ import { Avatar, Button } from '@heroui/react';
 const Navbar = () => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  console.log(user)
+
   return (
     <nav className="flex justify-between items-center bg-white p-5">
       <ul className="flex items-center gap-3">

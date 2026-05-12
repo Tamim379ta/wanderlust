@@ -1,3 +1,4 @@
+import BookingCard from "@/components/BookingCard";
 import Delete from "@/components/Delete";
 import EditModal from "@/components/EditModal";
 import { Button, Card } from "@heroui/react";
@@ -24,8 +25,8 @@ const DestinationDetailsPage = async ({ params }) => {
         </Link>
 
         <div className="gap-2 flex">
-          <EditModal data={data}/>
-          <Delete data={data}/>
+          <EditModal data={data} />
+          <Delete data={data} />
         </div>
       </div>
       <Card>
@@ -37,26 +38,33 @@ const DestinationDetailsPage = async ({ params }) => {
           height={500}
         />
 
-        <div className='mt-3 px-10'>
-          <div className='flex gap-1 items-center text-gray-400'>
-            <CiLocationOn />
-            <p>{country}</p>
-          </div>
+        <div className='mt-3 flex justify-between gap-10 px-10'>
+          <div className="flex-1">
+            <div className='flex gap-1 items-center text-gray-400'>
+              <CiLocationOn />
+              <p>{country}</p>
+            </div>
 
-          <div className='flex justify-between items-center'>
-            <h1 className='text-2xl font-semibold'>{destinationName}</h1>
-          </div>
+            <div className='flex justify-between items-center'>
+              <h1 className='text-2xl font-semibold'>{destinationName}</h1>
+            </div>
 
-          <div>
-            <p className='text-xl'>${price}<span className='text-gray-400 text-xs'>/Person</span> </p>
-            <p className='flex items-center gap-1 text-gray-400'> <CiCalendarDate /> {duration}</p>
-            <p className="text-xl font-semibold">Overview</p>
-            <p>{description}</p>
+            <div>
+              <p className='text-xl'>${price}<span className='text-gray-400 text-xs'>/Person</span> </p>
+              <p className='flex items-center gap-1 text-gray-400'> <CiCalendarDate /> {duration}</p>
+              <p className="text-xl font-semibold">Overview</p>
+              <p>{description}</p>
+            </div>
+          </div>
+          <div className="flex-1">
+           <BookingCard data={data}/>
           </div>
 
 
         </div>
       </Card>
+
+
 
     </div>
   );
