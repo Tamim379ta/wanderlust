@@ -1,11 +1,17 @@
+"use client"
+import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { Avatar, Button } from '@heroui/react';
 
 const Navbar = () => {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  console.log(user)
   return (
-    <nav className="flex justify-between bg-white p-5">
-      <ul className="flex gap-3">
+    <nav className="flex justify-between items-center bg-white p-5">
+      <ul className="flex items-center gap-3">
         <li>
           <Link href={"/"}>Home</Link>
         </li>
@@ -21,7 +27,7 @@ const Navbar = () => {
         </li>
       </ul>
 
-      <div>
+      <div >
         <Image
           src={"/assets/Wanderlast.png"}
           height={150}
@@ -30,16 +36,27 @@ const Navbar = () => {
         />
       </div>
 
-      <ul className="flex gap-3">
+      <ul className="flex items-center gap-3">
         <li>
           <Link href={"/profile"}>Profile</Link>
         </li>
-        <li>
-          <Link href={"/login"}>Login</Link>
-        </li>
-        <li>
-          <Link href={"/signup"}>Sign Up</Link>
-        </li>
+        {
+          user ? <>
+            <Avatar>
+              <Avatar.Image referrerPolicy="no-referrer" alt="John Doe" src={user?.image} />
+              <Avatar.Fallback>{user.name[0]}</Avatar.Fallback>
+            </Avatar>
+            <li><Button onClick={async () => await authClient.signOut()} className={'rounded-[2px]'} variant="danger">Logout</Button></li>
+          </> :
+            <>
+              <li>
+                <Link href={"/login"}>Login</Link>
+              </li>
+              <li>
+                <Link href={"/signup"}>Sign Up</Link>
+              </li>
+            </>
+        }
       </ul>
     </nav>
   );

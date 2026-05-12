@@ -1,8 +1,9 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
-import { Check } from "@gravity-ui/icons";
-import { Button, Card, Description, FieldError, Form, Input, Label, TextField } from "@heroui/react";
+import { Button, Card, Description, FieldError, Form, Input, Label, Separator, TextField } from "@heroui/react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
+import { FcGoogle } from "react-icons/fc";
 
 const SignUpPage = () => {
   const onSubmit = async (e) => {
@@ -11,18 +12,23 @@ const SignUpPage = () => {
     const formData = new FormData(e.currentTarget)
     const user = Object.fromEntries(formData.entries())
 
-    const {data, error} = await authClient.signUp.email({
+    const { data, error } = await authClient.signUp.email({
       name: user.name,
       email: user.email,
       image: user.image,
       password: user.password
     })
 
-    if(data){
+    if (data) {
       redirect('/')
     }
 
   }
+  const signIn = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+  };
   return (
     <div className="max-w-7xl mx-auto my-10">
       <h1 className="text-2xl font-bold text-center">Create Account</h1>
@@ -86,11 +92,22 @@ const SignUpPage = () => {
             <FieldError />
           </TextField>
           <div className="flex gap-2">
-            <Button className={'w-full rounded-xl'} type="submit">
+            <Button className={'w-full rounded-xl bg-cyan-500'} type="submit">
               SignUp
             </Button>
           </div>
         </Form>
+        <div className="flex justify-center items-center gap-3">
+          <Separator />
+          <div className="whitespace-nowrap"> Or sign up with</div>
+          <Separator />
+        </div>
+        <div>
+          <Button className={'w-full rounded-xl'} variant="outline" onClick={signIn}> <FcGoogle /> Sign up with Google</Button>
+          <p className="text-center mt-2">
+            Already have an account? <Link className="text-cyan-500" href={'/login'}>Login</Link>
+          </p>
+        </div>
       </Card>
     </div>
   );
