@@ -7,15 +7,18 @@ import { useState } from 'react';
 
 
 const BookingCard = ({ data }) => {
-  const { data: session } = authClient.useSession();
+  const { data: session , isPending} = authClient.useSession();
   const user = session?.user;
   const { price, _id, destinationName, imageUrl, country } = data;
   const [date, setDate] = useState(null);
-
+console.log(session)
+if(isPending) {
+  return
+}
   const handleBooking = async () => {
     const bookingsData = {
       userName: user.name,
-      userId: user.id,
+      userId: user?.id,
       userImage: user.image,
       destinationId: _id,
       departureDate: new Date(date),
@@ -24,10 +27,15 @@ const BookingCard = ({ data }) => {
       destinationName,
       price
     }
+
+    const {data:tokenData} = await authClient.token();
+    console.log(tokenData)
+
     const res = await fetch('http://localhost:5000/bookings', {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        authrization: `Bearer ${tokenData.token}`
       },
       body: JSON.stringify(bookingsData)
     })
