@@ -8,7 +8,7 @@ const BookingPage = async() => {
   })
   const user = session?.user
   const {id} = user;
-  const res = await fetch(`http://localhost:5000/bookings/${id}`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${id}`)
   const bookings = await res.json()
   return (
     <div className="container mx-auto">
